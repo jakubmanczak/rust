@@ -1,55 +1,5 @@
-#[derive(Debug, PartialEq)]
-enum MarioForm {
-    Mario,
-    SuperMario,
-    FireMario,
-    CapeMario,
-}
-
-#[derive(Debug)]
-enum Powerup {
-    Mushroom,
-    FireFlower,
-    Feather,
-}
-
-#[derive(Debug)]
-struct Player {
-    form: MarioForm,
-    lives: u32,
-}
-
-impl Player {
-    fn new() -> Player {
-        Player {
-            form: MarioForm::Mario,
-            lives: 3,
-        }
-    }
-
-    fn collect_power_up(&mut self, powerup: Powerup) {
-        use MarioForm::*;
-        use Powerup::*;
-        match (&self.form, powerup) {
-            (Mario, Mushroom) => self.form = SuperMario,
-            (_, Feather) => self.form = CapeMario,
-            (_, FireFlower) => self.form = FireMario,
-            (_, Mushroom) => self.lives += 1,
-        }
-    }
-
-    fn take_damage(&mut self) {
-        use MarioForm::*;
-        if self.lives == 0 {
-            println!("Mario has 0 lives already...");
-        } else {
-            match &self.form {
-                Mario => self.lives -= 1,
-                _ => self.form = Mario,
-            }
-        }
-    }
-}
+mod mario;
+use mario::*;
 
 fn main() {
     let mut p = Player::new();
